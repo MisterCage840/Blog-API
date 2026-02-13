@@ -15,10 +15,22 @@ const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
 
+const allowedOrigins = [
+  process.env.CORS_ORIGIN_PUBLIC,
+  process.env.CORS_ORIGIN_ADMIN,
+]
+
 app.use(
   cors({
-    origin: true, // temporarily allow all origins
-    credentials: false,
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true)
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true)
+      }
+
+      return callback(new Error("Not allowed by CORS"))
+    },
   }),
 )
 
