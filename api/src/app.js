@@ -15,8 +15,6 @@ const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
 
-const cors = require("cors")
-
 const allowedOrigins = [
   process.env.CORS_ORIGIN_PUBLIC,
   process.env.CORS_ORIGIN_ADMIN,
@@ -37,7 +35,7 @@ app.use(
   }),
 )
 
-app.options("*", cors())
+app.options(/.*/, cors())
 
 app.get("/health", (req, res) => res.json({ ok: true }))
 
