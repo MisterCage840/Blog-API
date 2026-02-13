@@ -15,23 +15,12 @@ const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
 
-const allowedOrigins = [
-  process.env.CORS_ORIGIN_PUBLIC,
-  process.env.CORS_ORIGIN_ADMIN,
-].filter(Boolean)
+const cors = require("cors")
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true)
-
-      if (allowedOrigins.includes(origin)) return callback(null, true)
-
-      return callback(new Error(`CORS blocked for origin: ${origin}`))
-    },
+    origin: true, // temporarily allow all origins
     credentials: false,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 )
 
