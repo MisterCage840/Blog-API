@@ -15,8 +15,6 @@ const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
 
-const cors = require("cors")
-
 app.use(
   cors({
     origin: true, // temporarily allow all origins
