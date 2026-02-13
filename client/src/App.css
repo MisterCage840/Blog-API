@@ -1,0 +1,242 @@
+:root {
+  --bg: #f4f1e8;
+  --paper: #fffdf8;
+  --ink: #2e2924;
+  --ink-soft: #6c655d;
+  --line: #ded5c8;
+  --accent: #c45c2f;
+  --accent-soft: #f4d3c4;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --shadow: 0 18px 34px rgba(57, 45, 33, 0.08);
+}
+
+#root {
+  min-height: 100vh;
+  width: min(1180px, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: 2.25rem 0;
+}
+
+.app-loading {
+  padding: 2rem;
+  color: var(--ink-soft);
+  font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, #f8e4d7 0%, transparent 45%),
+    linear-gradient(160deg, #f9f6ef 0%, #f1ece1 100%);
+  box-shadow: var(--shadow);
+}
+
+.sidebar {
+  border-right: 1px solid var(--line);
+  padding-right: 1.5rem;
+}
+
+.sidebar-title {
+  margin: 0 0 1rem;
+  font-size: 1.7rem;
+  color: var(--ink);
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.error-text {
+  margin: 0 0 1rem;
+  color: #ab2e2e;
+  font-weight: 700;
+}
+
+.post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.post-card {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  padding: 0.85rem 1rem;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 140ms ease,
+    box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.post-card:hover {
+  transform: translateY(-1px);
+  border-color: #c9b69d;
+  box-shadow: 0 8px 16px rgba(45, 36, 28, 0.08);
+}
+
+.post-card.active {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, #fff7f0 0%, #fffdf8 100%);
+}
+
+.post-card-title {
+  margin-bottom: 0.35rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.post-card-meta {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+.content {
+  min-width: 0;
+}
+
+.empty-state {
+  margin-top: 0.5rem;
+  padding: 2.25rem;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.article-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.15;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.article-meta {
+  margin: 0.55rem 0 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.article-content {
+  white-space: pre-wrap;
+  line-height: 1.72;
+  color: #352f29;
+}
+
+.section-divider {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.section-title {
+  margin: 0 0 0.9rem;
+  font-size: 1.22rem;
+  color: var(--ink);
+}
+
+.comments-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.comment-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  padding: 0.8rem 0.9rem;
+}
+
+.comment-meta {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.comment-content {
+  margin-top: 0.45rem;
+  white-space: pre-wrap;
+}
+
+.comment-form {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 560px;
+}
+
+.form-control {
+  width: 100%;
+  border: 1px solid #d2c6b5;
+  border-radius: 10px;
+  background: #fffdf9;
+  color: #2f2822;
+  font: 400 0.98rem/1.4 "Trebuchet MS", "Gill Sans", sans-serif;
+  padding: 0.68rem 0.8rem;
+  transition: border-color 120ms ease, box-shadow 150ms ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.text-area {
+  resize: vertical;
+  min-height: 118px;
+}
+
+.submit-btn {
+  justify-self: start;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.65rem 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(180deg, #cf6739 0%, #b85329 100%);
+  cursor: pointer;
+  transition: filter 120ms ease, transform 120ms ease;
+}
+
+.submit-btn:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+}
+
+.submit-btn:focus-visible {
+  outline: 3px solid var(--accent-soft);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  #root {
+    width: min(100%, calc(100% - 1.2rem));
+    padding: 0.6rem 0;
+  }
+
+  .app-shell {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding-right: 0;
+    padding-bottom: 1rem;
+  }
+
+  .article-title {
+    font-size: 1.8rem;
+  }
+}
