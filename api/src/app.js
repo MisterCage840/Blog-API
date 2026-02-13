@@ -15,13 +15,29 @@ const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
 
+const cors = require("cors")
+
+const allowedOrigins = [
+  process.env.CORS_ORIGIN_PUBLIC,
+  process.env.CORS_ORIGIN_ADMIN,
+].filter(Boolean)
+
 app.use(
   cors({
-    origin: [process.env.CORS_ORIGIN_PUBLIC, process.env.CORS_ORIGIN_ADMIN],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true)
+
+      if (allowedOrigins.includes(origin)) return callback(null, true)
+
+      return callback(new Error(`CORS blocked for origin: ${origin}`))
+    },
+    credentials: false,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 )
+
+app.options("*", cors())
 
 app.get("/health", (req, res) => res.json({ ok: true }))
 
