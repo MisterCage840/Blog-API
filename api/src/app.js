@@ -15,22 +15,27 @@ const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
 
-const allowedOrigins = [
+const allowed = [
   process.env.CORS_ORIGIN_PUBLIC,
   process.env.CORS_ORIGIN_ADMIN,
-]
+].filter(Boolean)
+
+const vercelPreviewRegex =
+  /^https:\/\/blog-.*-mistercage840s-projects\.vercel\.app$/
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true)
+    origin: (origin, cb) => {
+      if (!origin) return cb(null, true)
 
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true)
-      }
+      if (allowed.includes(origin)) return cb(null, true)
 
-      return callback(new Error("Not allowed by CORS"))
+      if (vercelPreviewRegex.test(origin)) return cb(null, true)
+
+      return cb(new Error(`CORS blocked for origin: ${origin}`))
     },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 )
 
@@ -50,5 +55,13 @@ app.use("/api/admin/comments", adminCommentsRoutes)
 
 app.use(notFound)
 app.use(errorHandler)
+
+app.get("/debug/origin", (req, res) => {
+  res.json({
+    origin: req.headers.origin || null,
+    CORS_ORIGIN_PUBLIC: process.env.CORS_ORIGIN_PUBLIC || null,
+    CORS_ORIGIN_ADMIN: process.env.CORS_ORIGIN_ADMIN || null,
+  })
+})
 
 module.exports = app
