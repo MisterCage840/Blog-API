@@ -56,6 +56,25 @@ async function listAll(req, res) {
   res.json(posts)
 }
 
+async function getById(req, res) {
+  const { id } = req.params
+  const post = await prisma.post.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      published: true,
+      createdAt: true,
+      updatedAt: true,
+      publishedAt: true,
+    },
+  })
+
+  if (!post) return res.status(404).json({ error: "Post not found" })
+  res.json(post)
+}
+
 async function createPost(req, res) {
   const parsed = postCreateSchema.safeParse(req.body)
   if (!parsed.success)
@@ -79,7 +98,6 @@ async function updatePost(req, res) {
 
   const data = { ...parsed.data }
 
-  // If published toggled, set publishedAt
   if (typeof data.published === "boolean") {
     data.publishedAt = data.published ? new Date() : null
   }
@@ -96,7 +114,6 @@ async function deletePost(req, res) {
   const existing = await prisma.post.findUnique({ where: { id } })
   if (!existing) return res.status(404).json({ error: "Post not found" })
 
-  // Comments will be deleted only if DB has cascade rules; we’ll do explicit delete to be safe
   await prisma.comment.deleteMany({ where: { postId: id } })
   await prisma.post.delete({ where: { id } })
 
@@ -107,6 +124,7 @@ module.exports = {
   listPublished,
   getPublished,
   listAll,
+  getById,
   createPost,
   updatePost,
   deletePost,
