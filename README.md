@@ -1,10 +1,13 @@
-🚀 Blog API – Full Stack Platform
+**🚀 Blog API – Full Stack Platform**
 
 A production-ready full-stack blog platform built using a modern API-first architecture.
 
 This project demonstrates how to separate backend logic from frontend applications while maintaining security, flexibility, and scalability.
 
-🌍 Live Application
+
+
+
+**🌍 Live Application**
 
 Public Blog: [https://YOUR_PUBLIC_URL.vercel.app](https://blog-gufrjpfil-mistercage840s-projects.vercel.app/)
 
@@ -12,7 +15,10 @@ Admin Dashboard: [https://YOUR_ADMIN_URL.vercel.app](https://blog-api-7cxd-gznud
 
 Backend API: [https://YOUR_RENDER_API.onrender.com](https://blog-api-3r9a.onrender.com)
 
-🏗 Architecture Overview
+
+
+
+**🏗 Architecture Overview**
 
 This platform is built around a decoupled system:
 
@@ -27,7 +33,9 @@ This platform is built around a decoupled system:
 ☁️ Hosting – Render (API) + Vercel (Frontends)
 
 
-✨ Features
+
+
+**✨ Features**
 Public Blog
 
 View published posts
@@ -60,7 +68,10 @@ CORS protection
 
 Production deployment configuration
 
-🔐 Authentication Flow
+
+
+
+**🔐 Authentication Flow**
 
 Admin logs in.
 
