@@ -10,8 +10,12 @@ This project demonstrates how to separate backend logic from frontend applicatio
 **🌍 Live Application**
 
 Public Blog: [https://YOUR_PUBLIC_URL.vercel.app](https://blog-gufrjpfil-mistercage840s-projects.vercel.app/)
+<img width="1217" height="697" alt="image" src="https://github.com/user-attachments/assets/8fe50dfc-d161-49a3-8408-0bac1a78a1aa" />
+
 
 Admin Dashboard: [https://YOUR_ADMIN_URL.vercel.app](https://blog-api-7cxd-gznud8nxi-mistercage840s-projects.vercel.app/)
+<img width="1222" height="612" alt="image" src="https://github.com/user-attachments/assets/fe8828e6-b6ef-41b5-bdad-9b7598d669a8" />
+
 
 Backend API: [https://YOUR_RENDER_API.onrender.com](https://blog-api-3r9a.onrender.com)
 
