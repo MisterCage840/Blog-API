@@ -56,12 +56,4 @@ app.use("/api/admin/comments", adminCommentsRoutes)
 app.use(notFound)
 app.use(errorHandler)
 
-app.get("/debug/origin", (req, res) => {
-  res.json({
-    origin: req.headers.origin || null,
-    CORS_ORIGIN_PUBLIC: process.env.CORS_ORIGIN_PUBLIC || null,
-    CORS_ORIGIN_ADMIN: process.env.CORS_ORIGIN_ADMIN || null,
-  })
-})
-
 module.exports = app

@@ -31,6 +31,14 @@ export async function listPostsAdmin() {
   return res.json()
 }
 
+export async function getPostAdmin(id) {
+  const res = await fetch(`${BASE}/api/admin/posts/${id}`, {
+    headers: authHeaders(),
+  })
+  if (!res.ok) throw new Error("Failed to load post")
+  return res.json()
+}
+
 export async function createPost(payload) {
   const res = await fetch(`${BASE}/api/admin/posts`, {
     method: "POST",

@@ -3,6 +3,7 @@ import {
   register,
   login,
   listPostsAdmin,
+  getPostAdmin,
   createPost,
   updatePost,
   deletePost,
@@ -29,6 +30,7 @@ export default function App() {
   const [posts, setPosts] = useState([])
   const [selected, setSelected] = useState(null)
   const [editor, setEditor] = useState({ title: "", content: "" })
+  const [isLoadingEditor, setIsLoadingEditor] = useState(false)
 
   const [comments, setComments] = useState([])
 
@@ -74,9 +76,19 @@ export default function App() {
   }
 
   async function pickPost(p) {
-    setSelected(p)
-    // For simplicity, edit using current values only (we don’t fetch full post in admin)
-    setEditor({ title: p.title, content: "" }) // optional: build an admin GET-by-id route if you want full content
+    setErr("")
+    setIsLoadingEditor(true)
+    try {
+      const fullPost = await getPostAdmin(p.id)
+      setSelected(fullPost)
+      setEditor({ title: fullPost.title, content: fullPost.content || "" })
+    } catch (e) {
+      setErr(String(e.message || e))
+      setSelected(null)
+      setEditor({ title: "", content: "" })
+    } finally {
+      setIsLoadingEditor(false)
+    }
   }
 
   async function newPost() {
@@ -145,9 +157,9 @@ export default function App() {
         <div className="auth-card">
           <h2 className="panel-title">Admin</h2>
           <p className="auth-copy">
-          {authMode === "register"
-            ? "Create your first author account (run once)."
-            : "Login to manage posts & comments."}
+            {authMode === "register"
+              ? "Create your first author account (run once)."
+              : "Login to manage posts & comments."}
           </p>
           {err ? <p className="error-text">{err}</p> : null}
 
@@ -232,13 +244,22 @@ export default function App() {
                   {formatDate(p.updatedAt)}
                 </div>
                 <div className="toolbar compact">
-                  <button onClick={() => pickPost(p)} className="btn btn-ghost btn-sm">
+                  <button
+                    onClick={() => pickPost(p)}
+                    className="btn btn-ghost btn-sm"
+                  >
                     Edit
                   </button>
-                  <button onClick={() => togglePublish(p)} className="btn btn-ghost btn-sm">
+                  <button
+                    onClick={() => togglePublish(p)}
+                    className="btn btn-ghost btn-sm"
+                  >
                     {p.published ? "Unpublish" : "Publish"}
                   </button>
-                  <button onClick={() => removePost(p)} className="btn btn-danger btn-sm">
+                  <button
+                    onClick={() => removePost(p)}
+                    className="btn btn-danger btn-sm"
+                  >
                     Delete
                   </button>
                 </div>
@@ -257,7 +278,10 @@ export default function App() {
                 {formatDate(c.createdAt)}
               </div>
               <div className="comment-text">{c.content}</div>
-              <button onClick={() => removeComment(c.id)} className="btn btn-danger btn-sm">
+              <button
+                onClick={() => removeComment(c.id)}
+                className="btn btn-danger btn-sm"
+              >
                 Delete
               </button>
             </div>
@@ -267,7 +291,9 @@ export default function App() {
 
       <main className="panel editor-panel">
         <h2 className="panel-title">Editor</h2>
-        {!selected ? (
+        {isLoadingEditor ? (
+          <p className="hint-text">Loading post...</p>
+        ) : !selected ? (
           <p className="hint-text">Select a post to edit.</p>
         ) : (
           <div className="editor-stack">
@@ -289,10 +315,6 @@ export default function App() {
             <button onClick={savePost} className="btn btn-primary">
               Save Changes
             </button>
-            <p className="hint-text">
-              Tip: For full admin editing with prefilled content, add an admin
-              “GET post by id” route that returns title+content.
-            </p>
           </div>
         )}
       </main>
